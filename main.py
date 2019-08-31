@@ -33,8 +33,10 @@ class MenuKeyboard(keyboard.MenuKeyboard):
 
 
 class Menu:
-    def __init__(self, menu):
-        self.menu_list = menu
+    def __init__(self, x=72):
+        self.width = x
+        self.menu_renderer = MainRenderer(self.width)
+        self.choice = 0
 
     def main_menu(self):
         global menu_screen
@@ -59,9 +61,7 @@ def load_game(): pass
 def settings(): pass
 
 
-def_screen_construct = ["########################################################################",
-                        "#                                                                      #"]
-menu_screen = []
 menu_list = ['New Game', 'Load Game', 'Settings', 'Exit']
 if __name__ == '__main__':
-    main = Menu(menu_list)
+    main = Menu(x=72)
+    main.main_menu(menu_list)

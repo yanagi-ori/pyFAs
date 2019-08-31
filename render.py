@@ -5,10 +5,17 @@ STD_OUTPUT_HANDLE = -11
 
 
 class MainRenderer:
-    def __init__(self):
-        pass
+    def __init__(self, width):
+        self.width = width
+        self.screen_forms = ["#" * width, "#" + " " * (width - 2) + "#"]
+        self.win_height = 0
 
-    def render(self, menu_screen, menu, s_index=0):
+    def render(self, this_screen):
+        for i, line in enumerate(this_screen):
+            print_at(2 + i, 0, this_screen[i])
+        print_at(0, 0, '')
+
+    def render_menu(self, menu, s_index=0):
         height = len(menu)
         this_screen = copy.deepcopy(self.screen_forms)
         this_screen.append(this_screen[1])
