@@ -5,31 +5,12 @@ import sys
 from pynput.keyboard import Key
 from pynput.keyboard import Listener
 
-import keyboard
-import render
+from keyboard import *
+from render import *
 
 os.system("cls")
 
 print("tech demo")
-
-
-class MenuKeyboard(keyboard.MenuKeyboard):
-    def __init__(self):
-        self.s_index = 0
-        self.update_screen = render.MainRenderer()
-
-    def on_press(self, key):
-        if key == Key.up and self.s_index > 0:
-            self.s_index -= 1
-            self.update_screen.render(menu_screen, menu_list, self.s_index)
-        if key == Key.down and self.s_index < len(menu_list) - 1:
-            self.s_index += 1
-            self.update_screen.render(menu_screen, menu_list, self.s_index)
-        if key == Key.enter:
-            if self.s_index == 0: start_game()
-            if self.s_index == 1: load_game()
-            if self.s_index == 2: settings()
-            if self.s_index == 3: main.close_window()
 
 
 class Menu:
