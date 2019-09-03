@@ -27,8 +27,9 @@ class Team:
         happyornot = ["happy", "not happy"]
         for i in range(amount):
             new_player = self.create_player(name='new player of ' + self.name, age=random.randint(15, 45),
-                               story=stories[random.randint(0, len(stories)-1)], positions="test", team_name=self.name,
-                               contract="test", happiness=happyornot[random.randint(0, 1)])
+                                            story=stories[random.randint(0, len(stories) - 1)], positions="test",
+                                            team_name=self.name,
+                                            contract="test", happiness=happyornot[random.randint(0, 1)])
             print(new_player)
             self.players.append(new_player)
 
