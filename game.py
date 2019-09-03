@@ -21,15 +21,15 @@ class Team:
         self.lvl = lvl
         self.budget = budget
         self.players = []
-'''
+
     def create_player(self, age, story, club):
         """
         имеется в виду то, что игрока воспитывает клубная академия, это дает возможность дальнейшего развития
 
         age:
         young (15-20)
-        middle (21-29)
-        veteran (30-45)
+        middle (21-31)
+        veteran (32-45)
 
         backstory:
         wunderkind - игрок, выдающихся способностей
@@ -42,24 +42,48 @@ class Team:
         club - кому сейчас принадлежит игрок
         """
 
-        if story == "wunderkind": mul = 0.04, 
-        if story == "middle" : mul = 0.03
-        if story == "slogger": mul = 0.02
-        if story == "overhype" : mul = 0.04
-        if story == "loser": 
+        if story == "wunderkind":
+            lvl = 30
+            mul = (0.1, 0.08, 0.05)
+        elif story == "middle":
+            lvl = 20
+            mul = (0.04, 0.04, 0.01)
+        elif story == "slogger":
+            lvl = 15
+            mul = (0.04, 0.06, 0.03)
+        elif story == "overhype":
+            lvl = 30
+            mul = (0.05, 0.03, 0.0)
+        elif story == "loser":
+            lvl = 15
+            mul = (0.03, 0.02, 0.1)
+        elif story == "idler":
+            lvl = 25
+            mul = (0.03, 0.01, 0.0)
+        else:
+            print("missed")
+            lvl = 0.0
+            mul = (0.0, 0.0, 0.0)
 
-        name = 'test player'
-        lvl = 10
-        age -= 14
         if age <= 20:
-            for year in range(age):
-                lvl += random.triangular(0.0, 0.05, mul)'''
+            lvl += gen_year(age - 14, 0.1, 0.7, mul[0])
+        if 20 < age <= 32:
+            lvl += gen_year(age - 14, 0.1, 0.7, mul[0])
+            lvl += gen_year(age=12, low=0.0, high=0.06, mul=mul[1])
+        if age > 32:
+            lvl += gen_year(age - 14, 0.1, 0.7, mul[0])
+            lvl += gen_year(age=12, low=0.0, high=0.06, mul=mul[1])
+            lvl += gen_year(age=15, low=0.0, high=0.04, mul=mul[1], decrease=True)
 
 
 class Player:
-    def __init__(self, name, age, positions, team_name, contract, happiness, story):
+    def __str__(self):
+        return ", ".join([str(self.name), str(self.age), str(self.lvl), str(self.story)])
+
+    def __init__(self, name, age, lvl, positions, team_name, contract, happiness, story):
         self.name = name
         self.age = age
+        self.lvl = lvl
         self.positions = positions
         self.team_name = team_name
         self.contract = contract
@@ -101,6 +125,19 @@ class StartGame:
                 league.add_team(new_team)
             league.show()
             this_game_session.add_league(league)
+
+
+def gen_year(age, low, high, mul, decrease=False):
+    dec = 0.0
+    period = 0
+    if decrease is True:
+        if period == 4:
+            dec -= 0.01
+            period = 0
+        period += 1
+
+    for year in range(age):
+        return round(random.triangular(low - dec, high - dec, mul - dec) * 100)
 
 
 game = StartGame()
