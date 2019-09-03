@@ -10,11 +10,6 @@ class MainRenderer:
         self.screen_forms = ["#" * width, "#" + " " * (width - 2) + "#"]
         self.win_height = 0
 
-    def render(self, this_screen):
-        for i, line in enumerate(this_screen):
-            print_at(2 + i, 0, this_screen[i])
-        print_at(0, 0, '')
-
     def render_menu(self, menu, s_index=0):
         height = len(menu)
         this_screen = copy.deepcopy(self.screen_forms)
@@ -31,7 +26,7 @@ class MainRenderer:
         this_screen.append(this_screen[1])
         this_screen.append(this_screen[0])
         self.win_height = len(this_screen)
-        self.render(this_screen)
+        render(this_screen)
 
     def render_dialog(self, msg, s_index=0):
         this_screen = copy.deepcopy(self.screen_forms)
@@ -47,7 +42,19 @@ class MainRenderer:
         for i in range((self.win_height - 5) // 2):
             this_screen.append(this_screen[1])
         this_screen.append(this_screen[0])
-        self.render(this_screen)
+        render(this_screen)
+
+    def render_loading_screen(self, percentage, current_task):
+        this_screen = copy.deepcopy(self.screen_forms)
+        for i in range((self.win_height - 5) // 2 - 1):
+            this_screen.append(this_screen[1])
+        this_screen.append('#' + current_task.center(self.width - 2) + '#')
+        this_screen.append(this_screen[1])
+        this_screen.append('#' + (str(percentage) + '%').center(self.width - 2) + '#')
+        for i in range((self.win_height - 5) // 2):
+            this_screen.append(this_screen[1])
+        this_screen.append(this_screen[0])
+        render(this_screen)
 
 
 class COORD(Structure):
@@ -57,8 +64,14 @@ class COORD(Structure):
 COORD._fields_ = [("X", c_short), ("Y", c_short)]
 
 
-def print_at(r, c, s):
+def render(this_screen):
+    for i, line in enumerate(this_screen):
+        print_at(1 + i, 0, this_screen[i])
+    print_at(0, 0, '')
+
+
+def print_at(y, x, s):
     h = windll.kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
-    windll.kernel32.SetConsoleCursorPosition(h, COORD(c, r))
+    windll.kernel32.SetConsoleCursorPosition(h, COORD(x, y))
     c = s.encode("cp866")
     windll.kernel32.WriteConsoleA(h, c_char_p(c), len(c), None, None)

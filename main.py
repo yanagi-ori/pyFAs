@@ -3,6 +3,7 @@ import sys
 
 from pynput.keyboard import Listener
 
+from game import Game
 from keyboard import *
 from render import *
 
@@ -25,7 +26,6 @@ class Menu:
             self.menu_listener.join()
 
         if this_keyboard.s_index == 0:
-            self.menu_listener.stop()
             main.start_game()
         if this_keyboard.s_index == 1:
             main.load_game()
@@ -47,14 +47,24 @@ class Menu:
             self.dialog_listener.stop()
             main.main_menu(menu_list)
 
+    def start_game(self):
+        game = Game(self.menu_renderer)
+        self.menu_renderer.render_loading_screen(100, "ALL DONE! Other content is coming soon!")
+        dialog_keyboard = DialogKeyboard(self.menu_renderer, 'msg')
+        with Listener(on_press=dialog_keyboard.on_press) as self.dialog_listener:
+            self.dialog_listener.join()
 
-def start_game(): pass
+    def load_game(self):
+        self.menu_renderer.render_loading_screen(100, "ALL DONE! Other content is coming soon!")
+        dialog_keyboard = DialogKeyboard(self.menu_renderer, 'msg')
+        with Listener(on_press=dialog_keyboard.on_press) as self.dialog_listener:
+            self.dialog_listener.join()
 
-
-def load_game(): pass
-
-
-def settings(): pass
+    def settings(self):
+        self.menu_renderer.render_loading_screen(100, "ALL DONE! Other content is coming soon!")
+        dialog_keyboard = DialogKeyboard(self.menu_renderer, 'msg')
+        with Listener(on_press=dialog_keyboard.on_press) as self.dialog_listener:
+            self.dialog_listener.join()
 
 
 menu_list = ['New Game', 'Load Game', 'Settings', 'Exit']

@@ -1,6 +1,8 @@
 import json
 import random
 
+import render
+
 
 class League:
     def __init__(self, name):
@@ -12,7 +14,8 @@ class League:
 
     def show(self):
         for team in self.teams:
-            print(team)
+            pass
+            # print(team)
 
 
 class Team:
@@ -30,7 +33,7 @@ class Team:
                                             story=stories[random.randint(0, len(stories) - 1)], positions="test",
                                             team_name=self.name,
                                             contract="test", happiness=happyornot[random.randint(0, 1)])
-            print(new_player)
+            # print(new_player)
             self.players.append(new_player)
 
     def create_player(self, name, age, story, positions, team_name, contract, happiness):
@@ -109,32 +112,40 @@ class Contract:
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, renderer):
+        self.renderer = renderer
+        self.current_task = "Starting..."
+        self.percentage = 0
+        self.renderer.render_loading_screen(self.percentage, self.current_task)
         self.root_of_leagues = []
-
-    def add_league(self, league):
-        self.root_of_leagues.append(league)
-
-
-class StartGame:
-    def __init__(self):
-        this_game_session = Game()
+        render.print_at(6, 0, '#' + "Loading Default Data...".center(renderer.width - 2) + '#')
+        self.current_task = "Loading Default Data..."
         with open("package.json", "r") as read_file:
             data = json.load(read_file)
-        print(data)
         leagues_list = data.get("leagues")
         teams_list = data.get("teams")
-        print(leagues_list)
+        self.current_task = "Building Leagues..."
+        render.print_at(6, 0, '#' + self.current_task.center(renderer.width - 2) + '#')
         for league_name in leagues_list.keys():
             teams_in_league = leagues_list.get(league_name)
             league = League(league_name)
-            print(teams_in_league)
             for team in teams_in_league:
+                self.current_task = "Managing clubs"
+                render.print_at(6, 0, '#' + self.current_task.center(renderer.width - 2) + '#')
                 temp_data = teams_list.get(team)
                 new_team = Team(name=team, lvl=temp_data.get('lvl'), budget=temp_data.get('budget'))
+                self.current_task = "Generating new players for {0}...".format(team)
+                render.print_at(6, 0, '#' + self.current_task.center(renderer.width - 2) + '#')
                 new_team.start_generation(temp_data.get('players'))
+                self.current_task = "Adding new team to the league..."
+                render.print_at(6, 0, '#' + self.current_task.center(renderer.width - 2) + '#')
                 league.add_team(new_team)
-            this_game_session.add_league(league)
+            self.add_league(league)
+        self.percentage = 100
+        render.print_at(8, 0, '#' + (str(self.percentage) + '%').center(renderer.width - 2) + '#')
+
+    def add_league(self, league):
+        self.root_of_leagues.append(league)
 
 
 def gen_year(age, low, high, mul, decrease=False):
@@ -150,4 +161,5 @@ def gen_year(age, low, high, mul, decrease=False):
         return round(random.triangular(low - dec, high - dec, mul - dec) * 100)
 
 
-game = StartGame()
+# game = StartGame()
+current_task = "Starting..."
