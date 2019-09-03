@@ -22,14 +22,19 @@ class Team:
         self.budget = budget
         self.players = []
 
-    def create_player(self, age, story, club):
+    def start_generation(self, amount):
+        stories = ["wunderkind", "middle", "slogger", "overhype", "loser", "idler"]
+        happyornot = ["happy", "not happy"]
+        for i in range(amount):
+            new_player = self.create_player(name='new player of ' + self.name, age=random.randint(15, 45),
+                               story=stories[random.randint(0, len(stories)-1)], positions="test", team_name=self.name,
+                               contract="test", happiness=happyornot[random.randint(0, 1)])
+            print(new_player)
+            self.players.append(new_player)
+
+    def create_player(self, name, age, story, positions, team_name, contract, happiness):
         """
         имеется в виду то, что игрока воспитывает клубная академия, это дает возможность дальнейшего развития
-
-        age:
-        young (15-20)
-        middle (21-31)
-        veteran (32-45)
 
         backstory:
         wunderkind - игрок, выдающихся способностей
@@ -75,10 +80,14 @@ class Team:
             lvl += gen_year(age=12, low=0.0, high=0.06, mul=mul[1])
             lvl += gen_year(age=15, low=0.0, high=0.04, mul=mul[1], decrease=True)
 
+        return Player(name=name, age=age, lvl=lvl,
+                      positions=positions, team_name=team_name, contract=contract,
+                      happiness=happiness, story=story)
+
 
 class Player:
     def __str__(self):
-        return ", ".join([str(self.name), str(self.age), str(self.lvl), str(self.story)])
+        return ", ".join([str(self.name), "age: " + str(self.age), "lvl: " + str(self.lvl), str(self.story)])
 
     def __init__(self, name, age, lvl, positions, team_name, contract, happiness, story):
         self.name = name
@@ -122,8 +131,8 @@ class StartGame:
             for team in teams_in_league:
                 temp_data = teams_list.get(team)
                 new_team = Team(name=team, lvl=temp_data.get('lvl'), budget=temp_data.get('budget'))
+                new_team.start_generation(temp_data.get('players'))
                 league.add_team(new_team)
-            league.show()
             this_game_session.add_league(league)
 
 
