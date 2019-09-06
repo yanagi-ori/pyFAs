@@ -18,6 +18,7 @@ class League:
         if len(self.teams) % 2 != 0:
             self.teams += [""]
 
+        random.shuffle(self.teams)
         first_basket = self.teams[:len(self.teams) // 2]
         second_basket = self.teams[len(self.teams) // 2:]
         second_basket.reverse()
@@ -40,7 +41,7 @@ class League:
         for i in range(len(second_part) - 1):
             second_part[i] = second_part[i + 1]
         second_part[-1] = save
-        print(first_part, second_part)
+        # print(first_part, second_part)
         return first_part, second_part
 
     def show(self):
@@ -87,7 +88,6 @@ class Team:
 
         club - кому сейчас принадлежит игрок
         """
-        # TODO:
         name = "{0} {1}".format(names_list[random.randint(0, len(names_list)) - 1], surnames_list[
             random.randint(0, len(surnames_list)) - 1])
 

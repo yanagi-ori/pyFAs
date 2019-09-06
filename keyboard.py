@@ -1,3 +1,5 @@
+import copy
+
 from pynput.keyboard import Key
 
 
@@ -18,7 +20,7 @@ class MenuKeyboard:
             return False
 
 
-class DialogKeyboard():
+class DialogKeyboard:
     def __init__(self, renderer, msg):
         self.s_index = 0
         self.msg = msg
@@ -33,3 +35,5 @@ class DialogKeyboard():
             self.update_screen.render_dialog(self.msg, self.s_index)
         if key == Key.enter:
             return False
+
+

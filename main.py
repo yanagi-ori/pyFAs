@@ -49,10 +49,10 @@ class Menu:
 
     def start_game(self):
         game = Game(self.menu_renderer)
-        self.menu_renderer.render_loading_screen(100, "ALL DONE! Other content is coming soon!")
-        dialog_keyboard = DialogKeyboard(self.menu_renderer, 'msg')
-        with Listener(on_press=dialog_keyboard.on_press) as self.dialog_listener:
-            self.dialog_listener.join()
+        self.menu_renderer.render_game_screen([["menu", "menu"], ["menu", "menu"]])
+        game_keyboard = MenuKeyboard(self.menu_renderer, ["menu", "menu", "menu", "menu"])
+        with Listener(on_press=game_keyboard.on_press) as self.game_listener:
+            self.game_listener.join()
 
     def load_game(self):
         self.menu_renderer.render_loading_screen(100, "ALL DONE! Other content is coming soon!")
@@ -69,5 +69,5 @@ class Menu:
 
 menu_list = ['New Game', 'Load Game', 'Settings', 'Exit']
 if __name__ == '__main__':
-    main = Menu(x=72)
+    main = Menu(x=92)
     main.main_menu(menu_list)

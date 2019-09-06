@@ -13,7 +13,8 @@ class MainRenderer:
     def render_menu(self, menu, s_index=0):
         height = len(menu)
         this_screen = copy.deepcopy(self.screen_forms)
-        this_screen.append(this_screen[1])
+        for i in range(7):
+            this_screen.append(this_screen[1])
         for i in range(height):
             if i == s_index:
                 this_screen.append(
@@ -23,7 +24,8 @@ class MainRenderer:
                 this_screen.append(this_screen[1][:len(this_screen[1]) // 2 - len(menu[i]) // 2] + menu[i]
                                    + this_screen[1][len(this_screen[1]) // 2 - len(menu[i]) // 2 + len(menu[i]):])
             this_screen.append(this_screen[1])
-        this_screen.append(this_screen[1])
+        for _ in range(7):
+            this_screen.append(this_screen[1])
         this_screen.append(this_screen[0])
         self.win_height = len(this_screen)
         render(this_screen)
@@ -54,6 +56,25 @@ class MainRenderer:
         for i in range((self.win_height - 5) // 2):
             this_screen.append(this_screen[1])
         this_screen.append(this_screen[0])
+        render(this_screen)
+
+    def render_sim_screen(self, match_day):
+        this_screen = copy.deepcopy(self.screen_forms)
+        for _ in range((self.win_height - 5) // 2 - 1):
+            this_screen.append(this_screen[1])
+        pass
+
+    def render_game_screen(self, menu):
+        this_screen = copy.deepcopy(self.screen_forms)
+        for _ in range(7):
+            this_screen.append(this_screen[1])
+        for i in range(len(menu)):
+            this_screen.append('#' + ((" " * 6).join(menu[i])).center(self.width - 2) + '#')
+            this_screen.append(this_screen[1])
+        for _ in range(7):
+            this_screen.append(this_screen[1])
+        this_screen.append(this_screen[0])
+        self.win_height = len(this_screen)
         render(this_screen)
 
 
