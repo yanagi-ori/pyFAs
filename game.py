@@ -28,15 +28,21 @@ class Team:
     def start_generation(self, amount):
         stories = ["wunderkind", "middle", "slogger", "overhype", "loser", "idler"]
         happyornot = ["happy", "not happy"]
-        for i in range(amount):
-            new_player = self.create_player(name='new player of ' + self.name, age=random.randint(15, 45),
-                                            story=stories[random.randint(0, len(stories) - 1)], positions="test",
-                                            team_name=self.name,
-                                            contract="test", happiness=happyornot[random.randint(0, 1)])
-            # print(new_player)
-            self.players.append(new_player)
+        positions = ["GK", "DF", "MD", "FW"]
+        formation = (1, 4, 4, 2)
 
-    def create_player(self, name, age, story, positions, team_name, contract, happiness):
+        for i, amt in enumerate(formation):
+            for _ in range(amt):
+                new_player = self.create_player(age=random.randint(15, 45),
+                                                story=stories[random.randint(0, len(stories) - 1)],
+                                                positions=positions[i],
+                                                team_name=self.name,
+                                                contract="empty_field",
+                                                happiness=happyornot[random.randint(0, 1)])
+                self.players.append(new_player)
+            # print(new_player)
+
+    def create_player(self, age, story, positions, team_name, contract, happiness):
         """
         имеется в виду то, что игрока воспитывает клубная академия, это дает возможность дальнейшего развития
 
@@ -50,6 +56,9 @@ class Team:
 
         club - кому сейчас принадлежит игрок
         """
+        # TODO:
+        name = "{0} {1}".format(names_list[random.randint(0, len(names_list)) - 1], surnames_list[
+            random.randint(0, len(surnames_list)) - 1])
 
         if story == "wunderkind":
             lvl = 30
@@ -161,5 +170,13 @@ def gen_year(age, low, high, mul, decrease=False):
         return round(random.triangular(low - dec, high - dec, mul - dec) * 100)
 
 
-# game = StartGame()
+names_list = []
+surnames_list = []
+with open("names.txt") as names_file:
+    for line in names_file:
+        names_list.append(line.strip())
+with open("surnames.txt") as surnames_file:
+    for line in surnames_file:
+        surnames_list.append(line.strip())
+# game = Game()
 current_task = "Starting..."
