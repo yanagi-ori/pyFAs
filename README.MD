@@ -12,3 +12,4 @@
 * Generation of new players during the game
 * System of teams' interests
 * Simulation of games between teams during the championship
+* And more
