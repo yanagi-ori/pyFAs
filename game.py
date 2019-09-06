@@ -69,14 +69,20 @@ class Team:
 
         for i, amt in enumerate(formation):
             for _ in range(amt):
-                new_player = self.create_player(age=random.randint(15, 45),
-                                                story=stories[random.randint(0, len(stories) - 1)],
-                                                positions=positions[i],
-                                                team_name=self.name,
-                                                contract="empty_field",
-                                                happiness=happyornot[random.randint(0, 1)])
-                self.players.append(new_player)
-            # print(new_player)
+                self.players.append(self.create_player(age=random.randint(15, 45),
+                                                       story=stories[random.randint(0, len(stories) - 1)],
+                                                       positions=positions[i],
+                                                       team_name=self.name,
+                                                       contract="empty_field",
+                                                       happiness=happyornot[random.randint(0, 1)]))
+        if len(self.players) - sum(formation) > 0:
+            for _ in range(len(self.players) - sum(formation)):
+                self.players.append(self.create_player(age=random.randint(15, 45),
+                                                       story=stories[random.randint(0, len(stories) - 1)],
+                                                       positions=positions[random.randint(0, len(positions) - 1)],
+                                                       team_name=self.name,
+                                                       contract="empty_field",
+                                                       happiness=happyornot[random.randint(0, 1)]))
 
     def create_player(self, age, story, positions, team_name, contract, happiness):
         """
