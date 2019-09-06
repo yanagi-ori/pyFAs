@@ -1,4 +1,4 @@
-#pyFAs [in dev]
+# pyFAs (in dev)
 ##A console football agent simulator
 ##### What is done:
 * Loading game data from .json file
