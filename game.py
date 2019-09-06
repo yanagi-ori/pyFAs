@@ -190,6 +190,7 @@ class Game:
                 self.current_task = "Adding new team to the league..."
                 render.print_at(6, 0, '#' + self.current_task.center(renderer.width - 2) + '#')
                 league.add_team(new_team)
+            league.create_table()
             self.add_league(league)
         self.percentage = 100
         render.print_at(8, 0, '#' + (str(self.percentage) + '%').center(renderer.width - 2) + '#')
