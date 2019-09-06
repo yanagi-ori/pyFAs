@@ -12,28 +12,38 @@ class League:
         self.week = 0
 
     def add_team(self, team):
+        """ adds a new team to the current league """
         self.teams.append(team)
 
     def create_table(self):
-        if len(self.teams) % 2 != 0:
-            self.teams += [""]
-
+        if len(self.teams) % 2 != 0:  # if there're odd num of teams
+            self.teams += [""]  # we add an empty one
+            # if some team have a match with it, this team skips this tour
         random.shuffle(self.teams)
+        # dividing teams on the two groups
         first_basket = self.teams[:len(self.teams) // 2]
         second_basket = self.teams[len(self.teams) // 2:]
         second_basket.reverse()
-        self.calendar.append(self._generate_pairs_(first_basket, second_basket))
+        self.calendar.append(self.__generate_pairs__(first_basket, second_basket))
+        # during all the tours we create the pairs of teams, the first team in the pair is a home one
         for _ in range(2 * len(self.teams) - 2):
-            first_basket, second_basket = self.round_robin(first_basket, second_basket)
-            self.calendar.append(self._generate_pairs_(first_basket, second_basket))
+            first_basket, second_basket = self.__round_robin__(first_basket, second_basket)
+            self.calendar.append(self.__generate_pairs__(first_basket, second_basket))
 
-    def _generate_pairs_(self, first_part, second_part):
+    def __generate_pairs__(self, first_part, second_part):
+        """ creating pairs of teams - matches """
         week = []
         for i in range(len(first_part)):
             week.append((first_part[i], second_part[i]))
         return week
 
-    def round_robin(self, first_part, second_part):
+    def __round_robin__(self, first_part, second_part):
+        """
+        round-robin algorithm
+        The first team in the first array is static,
+        The first team from the second array moves to the first array[1], moving other elements to the left,
+        The last of the first array moves to the last element of second array, moving other element to the right.
+        """
         save = first_part[len(first_part) - 1]
         for i in range(len(first_part) - 1):
             first_part[len(first_part) - 1 - i] = first_part[len(first_part) - 2 - i]
@@ -41,7 +51,6 @@ class League:
         for i in range(len(second_part) - 1):
             second_part[i] = second_part[i + 1]
         second_part[-1] = save
-        # print(first_part, second_part)
         return first_part, second_part
 
     def show(self):
