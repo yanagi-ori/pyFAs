@@ -1,5 +1,5 @@
 # pyFAs (in dev)
-##A console football agent simulator
+## A console football agent simulator
 ##### What is done:
 * Loading game data from .json file
 * Generation of players, their names, position and skill level
