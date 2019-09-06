@@ -13,3 +13,7 @@
 * System of teams' interests
 * Simulation of games between teams during the championship
 * And more
+
+##### Dependencies:
+* pynput
+* ctypes
