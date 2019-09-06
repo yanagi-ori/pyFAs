@@ -53,11 +53,6 @@ class League:
         second_part[-1] = save
         return first_part, second_part
 
-    def show(self):
-        for team in self.teams:
-            pass
-            # print(team)
-
 
 class Team:
     def __init__(self, name, lvl, budget):
