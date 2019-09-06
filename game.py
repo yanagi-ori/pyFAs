@@ -8,9 +8,40 @@ class League:
     def __init__(self, name):
         self.name = name
         self.teams = []
+        self.calendar = []
+        self.week = 0
 
     def add_team(self, team):
         self.teams.append(team)
+
+    def create_table(self):
+        if len(self.teams) % 2 != 0:
+            self.teams += [""]
+
+        first_basket = self.teams[:len(self.teams) // 2]
+        second_basket = self.teams[len(self.teams) // 2:]
+        second_basket.reverse()
+        self.calendar.append(self._generate_pairs_(first_basket, second_basket))
+        for _ in range(2 * len(self.teams) - 2):
+            first_basket, second_basket = self.round_robin(first_basket, second_basket)
+            self.calendar.append(self._generate_pairs_(first_basket, second_basket))
+
+    def _generate_pairs_(self, first_part, second_part):
+        week = []
+        for i in range(len(first_part)):
+            week.append((first_part[i], second_part[i]))
+        return week
+
+    def round_robin(self, first_part, second_part):
+        save = first_part[len(first_part) - 1]
+        for i in range(len(first_part) - 1):
+            first_part[len(first_part) - 1 - i] = first_part[len(first_part) - 2 - i]
+        first_part[1] = second_part[0]
+        for i in range(len(second_part) - 1):
+            second_part[i] = second_part[i + 1]
+        second_part[-1] = save
+        print(first_part, second_part)
+        return first_part, second_part
 
     def show(self):
         for team in self.teams:
