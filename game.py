@@ -160,7 +160,7 @@ class Game:
         self.root_of_leagues = []
         render.print_at(6, 0, '#' + "Loading Default Data...".center(renderer.width - 2) + '#')
         self.current_task = "Loading Default Data..."
-        with open("package.json", "r") as read_file:
+        with open("data/package.json", "r") as read_file:
             data = json.load(read_file)
         leagues_list = data.get("leagues")
         teams_list = data.get("teams")
@@ -203,10 +203,10 @@ def gen_year(age, low, high, mul, decrease=False):
 
 names_list = []
 surnames_list = []
-with open("names.txt") as names_file:
+with open("data/names.txt") as names_file:
     for line in names_file:
         names_list.append(line.strip())
-with open("surnames.txt") as surnames_file:
+with open("data/surnames.txt") as surnames_file:
     for line in surnames_file:
         surnames_list.append(line.strip())
 # game = Game()
