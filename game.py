@@ -138,6 +138,12 @@ class Team:
                       positions=positions, team_name=team_name, contract=contract,
                       happiness=happiness, story=story)
 
+    def add_new_player(self, player):
+        self.players.append(player)
+
+    def del_gone_player(self, player):
+        self.players.remove(player)
+
 
 class Player:
     def __str__(self):
@@ -152,6 +158,10 @@ class Player:
         self.contract = contract
         self.happiness = happiness
         self.story = story
+
+    def transfer(self, old_team, new_team):
+        old_team.del_gone_player(self)
+        new_team.add_new_player(self)
 
 
 class Contract:
