@@ -77,8 +77,8 @@ class Team:
                                                        team_name=self.name,
                                                        contract="empty_field",
                                                        happiness=happyornot[random.randint(0, 1)]))
-        if len(self.players) - sum(formation) > 0:
-            for _ in range(len(self.players) - sum(formation)):
+        if amount - sum(self.formation) > 0:
+            for _ in range(amount - sum(self.formation)):
                 self.players.append(self.create_player(age=random.randint(15, 45),
                                                        story=stories[random.randint(0, len(stories) - 1)],
                                                        positions=positions[random.randint(0, len(positions) - 1)],
