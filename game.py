@@ -56,18 +56,20 @@ class League:
 
 class Team:
     def __init__(self, name, lvl, budget):
+        self.formation = (1, 4, 4, 2)
         self.name = name
         self.lvl = lvl
         self.budget = budget
         self.players = []
+        self.line_up = []  # GK - DF - MD - FW - sub
+        self.strength = []  # the same
 
     def start_generation(self, amount):
         stories = ["wunderkind", "middle", "slogger", "overhype", "loser", "idler"]
         happyornot = ["happy", "not happy"]
         positions = ["GK", "DF", "MD", "FW"]
-        formation = (1, 4, 4, 2)
 
-        for i, amt in enumerate(formation):
+        for i, amt in enumerate(self.formation):
             for _ in range(amt):
                 self.players.append(self.create_player(age=random.randint(15, 45),
                                                        story=stories[random.randint(0, len(stories) - 1)],
@@ -143,6 +145,22 @@ class Team:
 
     def del_gone_player(self, player):
         self.players.remove(player)
+
+    def sort_on_positions(self):
+        pos_list = ["GK", "DF", "MD", "FW"]
+        for i in range(4):
+            temp = []
+            for player in self.players:
+                if player.positions == pos_list[i]:
+                    temp.append(player)
+                    for j in range(len(temp) - 1, 0, -1):  # Sorting players on their position
+                        if temp[j].lvl > temp[j - 1].lvl:
+                            temp[j], temp[j - 1] = temp[j - 1], temp[j]
+            sum_lvl = 0
+            for p in temp[:self.formation[i]]:
+                sum_lvl += p.lvl
+            self.strength.append(sum_lvl)
+            self.line_up.append(temp)
 
 
 class Player:

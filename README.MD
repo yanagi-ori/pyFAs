@@ -4,6 +4,8 @@
 * Loading game data from .json file
 * Generation of players, their names, position and skill level
 * Generation of games calendar
+* Simple transfers
+* Teams' line-up formation
 
 ##### TODO:
 * Contract system
