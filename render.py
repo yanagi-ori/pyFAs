@@ -64,14 +64,17 @@ class MainRenderer:
             this_screen.append(this_screen[1])
         pass
 
-    def render_game_screen(self, menu):
+    def render_game_screen(self, menu, s_index):
         this_screen = copy.deepcopy(self.screen_forms)
-        for _ in range(7):
+        for _ in range(8):
             this_screen.append(this_screen[1])
         for i in range(len(menu)):
-            this_screen.append('#' + ((" " * 6).join(menu[i])).center(self.width - 2) + '#')
+            if i == s_index:
+                this_screen.append('#' + ("> " + menu[i] + " <").center(self.width - 2) + '#')
+            else:
+                this_screen.append('#' + (menu[i]).center(self.width - 2) + '#')
             this_screen.append(this_screen[1])
-        for _ in range(7):
+        for _ in range(8):
             this_screen.append(this_screen[1])
         this_screen.append(this_screen[0])
         self.win_height = len(this_screen)

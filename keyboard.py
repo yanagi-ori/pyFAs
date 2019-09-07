@@ -1,5 +1,3 @@
-import copy
-
 from pynput.keyboard import Key
 
 
@@ -37,3 +35,18 @@ class DialogKeyboard:
             return False
 
 
+class GameKeyboard:
+    def __init__(self, renderer, menu_list):
+        self.s_index = 0
+        self.update_screen = renderer
+        self.menu_list = menu_list
+
+    def on_press(self, key):
+        if key == Key.up and self.s_index > 0:
+            self.s_index -= 1
+            self.update_screen.render_game_screen(self.menu_list, self.s_index)
+        if key == Key.down and self.s_index < len(self.menu_list) - 1:
+            self.s_index += 1
+            self.update_screen.render_game_screen(self.menu_list, self.s_index)
+        if key == Key.enter:
+            return False

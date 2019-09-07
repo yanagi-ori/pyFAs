@@ -6,6 +6,7 @@
 * Generation of games calendar
 * Simple transfers
 * Teams' line-up formation
+* Match simulation
 
 ##### TODO:
 * Contract system
