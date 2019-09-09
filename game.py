@@ -3,6 +3,7 @@ import json
 import random
 
 import render
+from match import Match
 
 
 class League:
@@ -56,6 +57,15 @@ class League:
             second_part[i] = second_part[i + 1]
         second_part[-1] = save
         return first_part, second_part
+
+    def simulate(self):
+        match_day = self.calendar[self.week]
+        for match in match_day:
+            if "" not in match:
+                m = Match(match[0], match[1])
+                m.simulation()
+
+                # TODO: Впихнуть сюда рендер или возвращать значения в main.py для дальнейшего рендеринга (1)
 
 
 class Team:
@@ -234,6 +244,11 @@ class Game:
     def add_league(self, league):
         self.root_of_leagues.append(league)
 
+    def simulate_week(self):
+        for league in self.root_of_leagues:
+            league.simulate()
+            league.week += 1
+
 
 def gen_year(age, low, high, mul, decrease=False):
     dec = 0.0
@@ -256,5 +271,3 @@ with open("data/names.txt") as names_file:
 with open("data/surnames.txt") as surnames_file:
     for line in surnames_file:
         surnames_list.append(line.strip())
-# game = Game()
-current_task = "Starting..."
