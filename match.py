@@ -20,6 +20,8 @@ class Match:
         if num_of_rounds < 0:
             if random.randint(0, 100) > 50: self.score[1] += 1
             for i in range(num_of_rounds):
+                if self.score[0] == 10 or self.score[1] == 10: break  # ограничение числа голов.
+                # не очень правильно, возможно, потом переделаю
                 temp = self.round_simulation(self.team2, self.team1)
                 if temp == self.team1:
                     self.score[0] += 1
@@ -39,10 +41,10 @@ class Match:
 
         all_skill_pts = team1_full + team2_full
         print(team1_full, team2_full)
-        print(team1_full / all_skill_pts * 100, team2_full / all_skill_pts * 100)
+        # print(team1_full / all_skill_pts * 100, team2_full / all_skill_pts * 100)
         print(self.team1.strength, self.team2.strength)
-        print("team 1 attacks:", team1_in_atk, team2_in_def)
-        print("team 2 attacks:", team2_in_atk, team1_in_def)
+        # print("team 1 attacks:", team1_in_atk, team2_in_def)
+        # print("team 2 attacks:", team2_in_atk, team1_in_def)
         print(self.score)
 
     def round_simulation(self, attackers, defenders):
@@ -50,7 +52,7 @@ class Match:
         attackers_in_atk = attackers.strength[2] + attackers.strength[3]
         defenders_in_def = defenders.strength[1] + defenders.strength[2] // 2
         defenders_in_atk = defenders.strength[2] + defenders.strength[3]
-        if attackers_in_atk + random.randint(0, 10) > defenders_in_def + random.randint(0, 20):
+        if attackers_in_atk + random.randint(0, 25) > defenders_in_def + random.randint(0, 20):
             if attackers.line_up[3][random.randint(0, 1)].lvl \
                     + random.randint(0, 10) > defenders.line_up[0][0].lvl + random.randint(30, 60):
                 return attackers
