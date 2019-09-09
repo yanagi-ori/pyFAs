@@ -222,6 +222,7 @@ class Game:
                 self.current_task = "Generating new players for {0}...".format(team)
                 render.print_at(6, 0, '#' + self.current_task.center(renderer.width - 2) + '#')
                 new_team.start_generation(temp_data.get('players'))
+                new_team.sort_on_positions()
                 self.current_task = "Adding new team to the league..."
                 render.print_at(6, 0, '#' + self.current_task.center(renderer.width - 2) + '#')
                 league.add_team(new_team)
