@@ -1,3 +1,4 @@
+import copy
 import json
 import random
 
@@ -26,9 +27,12 @@ class League:
         second_basket.reverse()
         self.calendar.append(self.__generate_pairs__(first_basket, second_basket))
         # during all the tours we create the pairs of teams, the first team in the pair is a home one
-        for _ in range(2 * len(self.teams) - 2):
+        for _ in range(len(self.teams) - 1):
             first_basket, second_basket = self.__round_robin__(first_basket, second_basket)
             self.calendar.append(self.__generate_pairs__(first_basket, second_basket))
+        temp = copy.deepcopy(self.calendar)
+        temp.reverse()
+        self.calendar += temp
 
     def __generate_pairs__(self, first_part, second_part):
         """ creating pairs of teams - matches """
