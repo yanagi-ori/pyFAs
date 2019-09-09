@@ -1,5 +1,12 @@
 {
-  "leagues": {"test league": ["team 1", "team 2", "team 3"]},
+  "leagues": {
+    "test league": [
+      "team 1",
+      "team 2",
+      "team 3",
+      "team 4"
+    ]
+  },
   "teams": {
     "team 1": {
       "lvl": 10,
@@ -15,6 +22,11 @@
       "lvl": 8,
       "budget": 4,
       "players": 14
+    },
+    "team 4": {
+      "lvl": 1,
+      "budget": 1,
+      "players": 16
     }
   }
 }
