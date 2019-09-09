@@ -59,6 +59,9 @@ class League:
 
 
 class Team:
+    def __str__(self):
+        return self.name
+
     def __init__(self, name, lvl, budget):
         self.formation = (1, 4, 4, 2)
         self.name = name
