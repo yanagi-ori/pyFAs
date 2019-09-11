@@ -7,6 +7,7 @@
 * Simple transfers
 * Teams' line-up formation
 * Match simulation
+* Simulation of games between teams during the championship
 
 ##### TODO:
 * Contract system
@@ -14,7 +15,6 @@
 * Teams' academies system
 * Generation of new players during the game
 * System of teams' interests
-* Simulation of games between teams during the championship
 * And more
 
 ##### Dependencies:
