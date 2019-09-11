@@ -60,12 +60,12 @@ class League:
 
     def simulate(self):
         match_day = self.calendar[self.week]
+        results = []
         for match in match_day:
             if "" not in match:
                 m = Match(match[0], match[1])
-                m.simulation()
-
-                # TODO: Впихнуть сюда рендер или возвращать значения в main.py для дальнейшего рендеринга (1)
+                results.append(((match[0].name, match[1].name), m.simulation()))
+        return results
 
 
 class Team:
@@ -244,10 +244,12 @@ class Game:
     def add_league(self, league):
         self.root_of_leagues.append(league)
 
-    def simulate_week(self):
+    def simulate_global_week(self):
+        results = []
         for league in self.root_of_leagues:
-            league.simulate()
+            results.append(league.simulate())
             league.week += 1
+            return results
 
 
 def gen_year(age, low, high, mul, decrease=False):

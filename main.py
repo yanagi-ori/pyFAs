@@ -51,13 +51,17 @@ class Menu:
         game = Game(self.menu_renderer)
         self.in_game_menu(game)
 
-    def in_game_menu(self, game):
+    def in_game_menu(self, game, week=1):
         self.menu_renderer.render_game_screen(["Клиенты", "Команды", "Следующая неделя"], 0)
         this_keyboard = GameKeyboard(self.menu_renderer, ["Клиенты", "Команды", "Следующая неделя"])
         with Listener(on_press=this_keyboard.on_press) as game_listener:
             game_listener.join()
         if this_keyboard.s_index == 2:
-            self.in_game_menu(game)
+            self.menu_renderer.render_sim_screen(game.simulate_global_week(), week)
+            wait_keyboard = GameKeyboard(self.menu_renderer, ["Клиенты", "Команды", "Следующая неделя"])
+            with Listener(on_press=wait_keyboard.on_press) as wait_listener:
+                wait_listener.join()
+            self.in_game_menu(game, week + 1)
 
     def load_game(self):
         self.menu_renderer.render_loading_screen(100, "ALL DONE! Other content is coming soon!")

@@ -58,11 +58,24 @@ class MainRenderer:
         this_screen.append(this_screen[0])
         render(this_screen)
 
-    def render_sim_screen(self, match_day):
+    def render_sim_screen(self, match_day, week):
+        matches = match_day[0]
         this_screen = copy.deepcopy(self.screen_forms)
-        for _ in range((self.win_height - 5) // 2 - 1):
+        for _ in range(2):
             this_screen.append(this_screen[1])
-        pass
+        this_screen.append('#' + "Week {0} results".format(week).center(self.width - 2) + '#')
+        for _ in range(2):
+            this_screen.append(this_screen[1])
+        for i in range((self.win_height - 2 - 4 - 2) // 2):
+            if i <= len(matches) - 1:
+                temp = matches[i]  # Мы берем результат конкретного матча
+                this_screen.append(
+                    '#' + '{0} : {1} - {2} : {3}'.format(temp[0][0], temp[0][1], temp[1][0], temp[1][1]).center(
+                        self.width - 2) + '#')
+            else:
+                this_screen.append(this_screen[1])
+            this_screen.append(this_screen[1])
+        render(this_screen)
 
     def render_game_screen(self, menu, s_index):
         this_screen = copy.deepcopy(self.screen_forms)

@@ -38,14 +38,7 @@ class Match:
 
         if random.randint(0, 100) > 50: self.score[0] += 1
         if random.randint(0, 100) > 50: self.score[1] += 1
-
-        all_skill_pts = team1_full + team2_full
-        print(team1_full, team2_full)
-        # print(team1_full / all_skill_pts * 100, team2_full / all_skill_pts * 100)
-        print(self.team1.strength, self.team2.strength)
-        # print("team 1 attacks:", team1_in_atk, team2_in_def)
-        # print("team 2 attacks:", team2_in_atk, team1_in_def)
-        print(self.score)
+        return self.score
 
     def round_simulation(self, attackers, defenders):
         attackers_in_def = attackers.strength[1] + attackers.strength[2] // 2
