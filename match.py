@@ -10,11 +10,7 @@ class Match:
 
     def simulation(self):
         team1_full = sum(self.team1.strength)
-        team1_in_def = self.team1.strength[1] + self.team1.strength[2] // 1.5
-        team1_in_atk = self.team1.strength[2] + self.team1.strength[3]
         team2_full = sum(self.team2.strength)
-        team2_in_def = self.team2.strength[1] + self.team2.strength[2] // 1.5
-        team2_in_atk = self.team2.strength[2] + self.team2.strength[3]
 
         num_of_rounds = (team1_full - team2_full) // 10
         if num_of_rounds < 0:
