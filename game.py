@@ -267,9 +267,9 @@ def gen_year(age, low, high, mul, decrease=False):
 
 names_list = []
 surnames_list = []
-with open("data/names.txt") as names_file:
+with open("data/Names.txt") as names_file:
     for line in names_file:
         names_list.append(line.strip())
-with open("data/surnames.txt") as surnames_file:
+with open("data/Surnames.txt") as surnames_file:
     for line in surnames_file:
         surnames_list.append(line.strip())
