@@ -4,8 +4,8 @@ import sys
 from pynput.keyboard import Listener
 
 from game import Game
-from keyboard import *
-from render import *
+from utils.keyboard import *
+from utils.render import *
 
 os.system("cls")
 

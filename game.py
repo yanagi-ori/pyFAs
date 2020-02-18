@@ -2,7 +2,7 @@ import copy
 import json
 import random
 
-import render
+from utils import render
 from match import Match
 
 
