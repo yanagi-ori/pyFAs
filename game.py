@@ -17,8 +17,9 @@ class League:
         """ adds a new team to the current league """
         self.teams.append(team)
 
-    def create_table(self):
-        if len(self.teams) % 2 != 0:  # if there're odd num of teams
+    def generate_calendar(self):
+        """ this method generates calendar of matches"""
+        if len(self.teams) % 2 != 0:  # if there've odd num of teams
             self.teams += [""]  # we add an empty one
             # if some team have a match with it, this team skips this tour
         random.shuffle(self.teams)
@@ -31,9 +32,9 @@ class League:
         for _ in range(len(self.teams) - 1):
             first_basket, second_basket = self.__round_robin__(first_basket, second_basket)
             self.calendar.append(self.__generate_pairs__(first_basket, second_basket))
+        # we generates the first round
         temp = copy.deepcopy(self.calendar)
-        temp.reverse()
-        self.calendar += temp
+        self.calendar += temp.reverse()  # and add the second one
 
     def __generate_pairs__(self, first_part, second_part):
         """ creating pairs of teams - matches """
@@ -236,7 +237,7 @@ class Game:
                 self.current_task = "Adding new team to the league..."
                 render.print_at(6, 0, '#' + self.current_task.center(renderer.width - 2) + '#')
                 league.add_team(new_team)
-            league.create_table()
+            league.generate_calendar()
             self.add_league(league)
         self.percentage = 100
         render.print_at(8, 0, '#' + (str(self.percentage) + '%').center(renderer.width - 2) + '#')
